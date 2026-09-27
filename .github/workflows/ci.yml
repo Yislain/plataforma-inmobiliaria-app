@@ -24,10 +24,10 @@ jobs:
           cache: true
 
       - name: Instalar dependencias
-        run: flutter pub get
+        run: cd app_inmobiliaria && flutter pub get
 
       - name: Linter y Análisis Estático
-        run: flutter analyze
+        run: cd app_inmobiliaria && flutter analyze
 
       - name: Pruebas Unitarias
-        run: flutter test
+        run: cd app_inmobiliaria && flutter test
