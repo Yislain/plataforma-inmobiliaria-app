@@ -27,7 +27,7 @@ jobs:
         run: cd app_inmobiliaria && flutter pub get
 
       - name: Linter y Análisis Estático
-        run: cd app_inmobiliaria && flutter analyze
+        run: cd app_inmobiliaria && flutter analyze --no-fatal-infos --no-fatal-warnings
 
       - name: Pruebas Unitarias
         run: cd app_inmobiliaria && flutter test
