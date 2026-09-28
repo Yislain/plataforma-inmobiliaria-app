@@ -1,13 +1,11 @@
-## Contexto
-- **Módulo / Pantalla:** 
-- **Ticket / Issue:** #
-- **Tipo de cambio:** [Feature | Bugfix | Chore | UI Test]
+## Descripción de los cambios
+Resumen conciso de los cambios introducidos.
 
-## Checklist de calidad automatizada
-- [ ] La aplicación compila localmente sin advertencias críticas.
-- [ ] Las pruebas unitarias pasaron en el CI de GitHub Actions.
-- [ ] Formato y convención de commits respetados.
-- [ ] Se incluye evidencia gráfica (si aplica a UI).
+## Tipo de cambio
+- [ ] feat: Nueva funcionalidad
+- [ ] fix: Corrección de error
+- [ ] docs: Cambios en documentación
 
-## Evidencia
-[Insertar captura de pantalla o enlace al check en verde aquí]
+## Checklist
+- [ ] El código pasa el linter (`flutter analyze`).
+- [ ] Se ejecutaron las pruebas unitarias (`flutter test`).
