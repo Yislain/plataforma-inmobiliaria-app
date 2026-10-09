@@ -1,7 +1,7 @@
 name: Flutter Mobile CI
 
 on:
-  pull_request:
+  push:
     branches: [ "main" ]
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
       - name: Checkout del código
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Requerido por SonarQube para un análisis profundo del historial
+          fetch-depth: 0
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4
