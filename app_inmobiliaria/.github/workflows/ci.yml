@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Requerido por SonarQube para un análisis profundo del historial
 
       - name: Setup Java JDK
         uses: actions/setup-java@v4
@@ -31,3 +33,16 @@ jobs:
 
       - name: Pruebas Unitarias
         run: flutter test
+
+      - name: Análisis de SonarQube / SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Notificar a Discord en caso de fallo
+        if: failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d '{"content": "🚨 **¡Alerta en el Pipeline de RentaFácil!** La integración continua ha fallado en la ejecución. Revisa los logs del repositorio."}' \
+          ${{ secrets.DISCORD_WEBHOOK }}
