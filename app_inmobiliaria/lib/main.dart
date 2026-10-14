@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
-import 'router.dart'; // Importa la configuración de rutas
-import 'package:app_inmobiliaria/config/feature_flags.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'features/auth/domain/repositories/auth_repository.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'router.dart';
 
 void main() {
-  runApp(const RealEstateApp());
+  // Aquí deberías inyectar tu implementación real del repositorio
+  final authRepository = AuthRepositoryImpl(); 
+
+  runApp(
+    BlocProvider(
+      create: (context) => AuthBloc(authRepository: authRepository),
+      child: const RealEstateApp(),
+    ),
+  );
 }
 
 class RealEstateApp extends StatelessWidget {
@@ -11,31 +21,45 @@ class RealEstateApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Pasamos el Bloc al router para que escuche sus cambios
+    final authBloc = context.read<AuthBloc>();
+    final router = createRouter(authBloc);
+
     return MaterialApp.router(
       title: 'Plataforma Inmobiliaria',
-      
-      // 1. Definimos el tema claro (estándar)
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      
-      // 2. Definimos el tema oscuro (Beta)
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue, 
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
-      
-      // 3. AQUÍ USAMOS LA FEATURE FLAG:
-      // Si está en 'true', fuerza el modo oscuro. Si está en 'false', usa el claro.
-      themeMode: FeatureFlags.enableDarkModeBeta ? ThemeMode.dark : ThemeMode.light,
-      
-      // Conectamos la instancia de go_router
-      routerConfig: appRouter, 
+      routerConfig: router, 
       debugShowCheckedModeBanner: false,
     );
+  }
+}
+
+// Dummy temporal para evitar errores hasta que conectes tu backend
+class AuthRepositoryImpl implements AuthRepository {
+  @override
+  Future<dynamic> login(String email, String password) async {
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<void> logout() async {}
+
+  // CORRECCIÓN: Uso de parámetros nombrados requeridos para coincidir con la interfaz
+  @override
+  Future<dynamic> register({
+    required String email,
+    required String name,
+    required String password,
+    required String role,
+  }) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> checkAuthStatus() async {
+    return false;
   }
 }
