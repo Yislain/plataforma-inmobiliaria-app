@@ -38,7 +38,7 @@ void main() {
       );
 
       expect(find.text('Reportar Falla'), findsOneWidget);
-      expect(find.byType(TextFormField), findsWidgets);
+      expect(find.byType(TextField), findsWidgets);
     });
   });
 }
